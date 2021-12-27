@@ -407,20 +407,12 @@ class Canvas(QLabel):
             pixmap.fill(Qt.GlobalColor.transparent)
             self.setPixmap(pixmap)
             return
-
-        w, h = self.pixmap().width(), self.pixmap().height()
-        nw, nh = self.width(), self.height()
-
-        def qimageToNumpy(qimage, w, h):
-            bits = qimage.bits().asarray(h*w*4)
-            bits = np.array(bits, dtype=np.uint8)
-            bits = bits.reshape([h, w, 4])
-            return bits
-        oldPic = qimageToNumpy(self.pixmap().toImage(), w, h)
-        newPic = np.zeros([nh, nw, 4], dtype=np.uint8)
-        newPic[:min(h, nh), :min(w, nw)] = oldPic[:min(h, nh), :min(w, nw)]
-        pixmap = QPixmap(QImage(newPic.tobytes(), nw, nh, 4 *
-                         nw, QImage.Format.Format_RGBA8888))
+        
+        pixmap = QPixmap(self.width(), self.height())
+        pixmap.fill(Qt.GlobalColor.transparent)
+        painter=QPainter(pixmap)
+        painter.drawPixmap(0,self.height()-self.pixmap().height(),self.pixmap())
+        painter.end()
         self.setPixmap(pixmap)
 
     class Mode:
