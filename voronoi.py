@@ -394,13 +394,12 @@ class Canvas(QLabel):
         # pixmap.fill(Qt.GlobalColor.transparent)
         # self.setPixmap(pixmap)
 
-        painter = QPainter(self.pixmap())
-        # p = painter.pen()
-        # p.setColor(Qt.GlobalColor.transparent)
-        # painter.setPen(p)
-        painter.setCompositionMode(QPainter.CompositionMode_Source)
-        painter.fillRect(self.rect(), Qt.GlobalColor.transparent)
-        painter.end()
+        self.pixmap().fill(Qt.GlobalColor.transparent)
+
+        # painter = QPainter(self.pixmap())
+        # painter.setCompositionMode(QPainter.CompositionMode_Source)
+        # painter.fillRect(self.rect(), Qt.GlobalColor.transparent)
+        # painter.end()
 
     def resizeEvent(self, event):
         if self.pixmap() is None:
